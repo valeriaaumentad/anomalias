@@ -30,6 +30,8 @@
   #estrestxt{position:absolute;bottom:74px;left:50%;transform:translateX(-50%);font-size:11px;letter-spacing:2px;color:#aaa}
   #rejilla{position:absolute;inset:0;opacity:0;transition:opacity .3s;background:linear-gradient(90deg,#000 0 16%,transparent 16% 84%,#000 84%),repeating-linear-gradient(0deg,rgba(6,6,6,.96) 0 30px,transparent 30px 46px)}
   #tinte{position:absolute;inset:0;opacity:0}
+  #sigilo{position:absolute;bottom:92px;left:50%;transform:translateX(-50%);font-size:16px;color:#9fd6ff;letter-spacing:2px;text-shadow:0 1px 4px #000}
+  #btAgachar{right:140px;bottom:112px;width:56px;height:56px;font-size:22px}
   #tactil{position:fixed;inset:0;display:none;touch-action:none;-webkit-user-select:none;user-select:none}
   body.tactil.jugando #tactil{display:block}
   #joyBase{position:absolute;left:40px;bottom:40px;width:120px;height:120px;border-radius:50%;border:2px solid rgba(255,255,255,.35);background:rgba(255,255,255,.06);opacity:.35}
@@ -71,6 +73,7 @@
   <div id="estrestxt">ESTRÉS</div>
   <div id="estres"><div id="estresbar"></div></div>
   <div id="rejilla"></div>
+  <div id="sigilo"></div>
   <div id="tinte"></div>
   <canvas id="tele" width="160" height="90"></canvas>
   <div id="rayas"></div>
@@ -80,19 +83,21 @@
 
 <div id="aviso" class="pantalla ver" style="z-index:30"><h1 style="font-size:54px;color:#ffcc00;text-shadow:0 0 20px #a60;letter-spacing:4px">⚠️ ADVERTENCIA</h1><p style="font-size:22px">Este juego puede contener <b>jumpscares</b> (sustos de golpe),<br>sonidos fuertes y escenas que dan miedo.</p><div class="clic">Haz clic si te atreves</div></div>
 <button id="btnMusica" title="Quitar o poner la música (tecla M)">🎵</button>
-<div id="tactil"><div id="joyBase"><div id="joyPunto"></div></div><button class="bt" id="btCorrer">CORRER</button><button class="bt" id="btUsar">E</button><button class="bt" id="btTel">📱</button><button class="bt" id="btPausa">⏸</button></div>
+<div id="tactil"><div id="joyBase"><div id="joyPunto"></div></div><button class="bt" id="btCorrer">CORRER</button><button class="bt" id="btUsar">E</button><button class="bt" id="btTel">📱</button><button class="bt" id="btPausa">⏸</button><button class="bt" id="btAgachar">🤫</button></div>
 <div id="girar">🔄<br><br>Gira el móvil para jugar en horizontal</div>
 <div id="titulo" class="pantalla ver">
   <h1>ANOMALÍAS</h1>
   <h2>Parte 2 · El sótano</h2>
+  <div style="margin:-14px 0 18px;font-size:15px;color:#aaa">Elegir: <a href="index.html" style="color:#ddd" onclick="event.stopPropagation()">Parte 1</a> · <a href="sotano.html" style="color:#ddd" onclick="event.stopPropagation()">Parte 2</a> · <a href="tercera.html" style="color:#ddd" onclick="event.stopPropagation()">Parte 3</a></div>
   <div class="controles">
     <span><kbd>W A S D</kbd> o flechas</span><span>moverte</span>
     <span><kbd>Ratón</kbd></span><span>mirar</span>
     <span><kbd>Shift</kbd></span><span>correr (¡hace ruido!)</span>
+    <span><kbd>Q</kbd> o <kbd>C</kbd></span><span>agacharse (sigilo y esconderse bajo las mesas)</span>
     <span><kbd>E</kbd></span><span>coger, usar, hablar</span>
     <span><kbd>Esc</kbd></span><span>pausa</span>
   </div>
-  <div class="solo-tactil" style="font-size:16px;color:#ccc;margin:6px 0 22px;line-height:1.7">🕹️ Dedo a la <b>izquierda</b>: andar · 👆 Desliza a la <b>derecha</b>: mirar<br><b>E</b>: usar, hablar, esconderse · <b>CORRER</b> · 📱 teléfono · ⏸ pausa</div>
+  <div class="solo-tactil" style="font-size:16px;color:#ccc;margin:6px 0 22px;line-height:1.7">🕹️ Dedo a la <b>izquierda</b>: andar · 👆 Desliza a la <b>derecha</b>: mirar<br><b>E</b>: usar, hablar, esconderse · 🤫 agacharse · <b>CORRER</b> · 📱 teléfono · ⏸ pausa</div>
   <div class="clic">Haz clic para bajar al sótano</div>
   <p style="font-size:14px;margin-top:30px"><a href="index.html" onclick="event.stopPropagation()">← Volver a la Parte 1</a></p>
 </div>
@@ -534,6 +539,8 @@ const interiorR = personaMonstruo('#3a3a3a', '#bdb8ad', '#ff2200', '#1a1a1a', { 
 interiorR.rotation.x = 1.25; interiorR.position.z = -1; interiorR.userData.ojos.emissiveIntensity = 2.5;
 const gReptante = new THREE.Group(); gReptante.add(interiorR); gReptante.userData = interiorR.userData;
 const reptante = hacer('El Reptante', gReptante, V(45, 7.5), noEscalera);
+const marcaR = new THREE.Sprite(new THREE.SpriteMaterial({ map: texCanvas(64, 64, (g) => { g.fillStyle = '#fff'; g.beginPath(); g.arc(32, 32, 28, 0, 7); g.fill(); g.fillStyle = '#000'; g.font = 'bold 46px system-ui'; g.textAlign = 'center'; g.fillText('!', 32, 49); }), depthTest: false, transparent: true }));
+marcaR.scale.set(.55, .55, .55); marcaR.position.set(0, 1.6, .4); marcaR.renderOrder = 10; gReptante.add(marcaR);
 
 // Mamá Babosa: enorme, vive en el túnel del agua
 const gMama = new THREE.Group();
@@ -618,9 +625,9 @@ function loEstoyMirando(g) {
   return lineaDeVista(camera.position, g.position);
 }
 function meVe(g, alcance, cono) {
-  if (escondido) return false;
+  if (oculto) return false;
   const dx = camera.position.x - g.position.x, dz = camera.position.z - g.position.z, d = Math.hypot(dx, dz);
-  if (d > alcance * (1 + estres * .5)) return false;
+  if (d > alcance * (1 + estres * .5) * (agachado ? .55 : 1)) return false;
   if (d > 2.5 && (Math.sin(g.rotation.y) * dx + Math.cos(g.rotation.y) * dz) / d < Math.cos(cono)) return false;
   return lineaDeVista(g.position, camera.position);
 }
@@ -813,6 +820,9 @@ function candidato() {
   }
   return mejor;
 }
+// Mesas bajo las que esconderse agachado: [x, z, ancho, fondo]
+const mesas = [[64.5, 10.8, 1.8, .9]];
+let agachado = false, oculto = false, alturaCam = 1.6, avisoMesa = false;
 // ===== Esconderse en las taquillas =====
 let escondido = null;
 function taquillaCercana() {
@@ -821,10 +831,11 @@ function taquillaCercana() {
   return mejor;
 }
 function esconderse(t) {
-  escondido = t; camera.position.set(t.x, 1.55, t.z); yaw = Math.PI; pitch = 0;
+  escondido = t; agachado = false; camera.position.set(t.x, 1.55, t.z); yaw = Math.PI; pitch = 0;
   $('rejilla').style.opacity = 1; clac(); decir('🔒 Te has escondido en una taquilla.<br>Aquí no te encuentran. Pulsa <b>E</b> para salir.', 3);
 }
 function salirTaquilla() { const t = escondido; escondido = null; camera.position.set(t.x, 1.6, t.fz + .7); $('rejilla').style.opacity = 0; clac(); }
+function alternarAgachado() { if (escondido) return; agachado = !agachado; decir(agachado ? '🤫 Agachado: modo sigilo' : 'De pie', 1.2); }
 function pulsarE() {
   if (dlg) return siguienteDlg();
   if (escondido) return salirTaquilla();
@@ -870,7 +881,7 @@ const SUSTOS = {
 };
 let jumpscare = null;
 function golpe(cr) {
-  if (invulnerable > 0 || jumpscare || escondido) return;
+  if (invulnerable > 0 || jumpscare || oculto) return;
   jumpscare = { cr, t: 1.15 }; dlg = null; $('mensaje').style.opacity = 0; pitch = 0;
   const cfg = SUSTOS[cr.tipo] || SUSTOS['El Quieto']; jumpscare.cfg = cfg; cfg.sonido(); cr.g.userData.ojos.emissiveIntensity = 6;
 }
@@ -950,6 +961,7 @@ if (tactil) {
   boton('btCorrer', () => teclas.add('ShiftLeft'), () => teclas.delete('ShiftLeft'));
   boton('btUsar', () => { if (estado === 'jugando') pulsarE(); });
   boton('btTel', () => { window.dispatchEvent(new KeyboardEvent('keydown', { code: 'KeyT' })); window.dispatchEvent(new KeyboardEvent('keyup', { code: 'KeyT' })); });
+  boton('btAgachar', () => { if (estado === 'jugando') alternarAgachado(); });
   boton('btPausa', () => { if (estado === 'jugando') { estado = 'pausa'; teclas.clear(); $('pausa').classList.add('ver'); } });
   if (document.title.includes('Parte 2')) $('btTel').style.display = 'none';
 }
@@ -958,6 +970,7 @@ addEventListener('keydown', e => {
   if (e.code === 'KeyM') alternarMusica();
   if (estado !== 'jugando' || e.repeat) return;
   if (e.code === 'KeyE') pulsarE();
+  if (e.code === 'KeyQ' || e.code === 'KeyC' || e.code === 'ControlLeft') alternarAgachado();
 });
 addEventListener('keyup', e => teclas.delete(e.code));
 addEventListener('blur', () => teclas.clear());
@@ -1025,12 +1038,12 @@ function actualizar(dt) {
   const adelante = Math.max(-1, Math.min(1, ((teclas.has('KeyW') || teclas.has('ArrowUp')) - (teclas.has('KeyS') || teclas.has('ArrowDown'))) - joy.y));
   const lado = Math.max(-1, Math.min(1, ((teclas.has('KeyD') || teclas.has('ArrowRight')) - (teclas.has('KeyA') || teclas.has('ArrowLeft'))) + joy.x));
   const moviendo = (adelante !== 0 || lado !== 0) && !dlg && !escondido;
-  const quiereCorrer = (teclas.has('ShiftLeft') || teclas.has('ShiftRight')) && moviendo;
+  const quiereCorrer = (teclas.has('ShiftLeft') || teclas.has('ShiftRight')) && moviendo && !agachado;
   const correr = quiereCorrer && !agotado && estamina > 0;
   if (correr) { estamina -= dt / 3.8; if (estamina <= 0) { estamina = 0; agotado = true; sonido(300, .5, 'sine', .08, 180); } }
   else { estamina = Math.min(1, estamina + dt / (moviendo ? 7 : 4.5)); if (agotado && estamina >= .4) agotado = false; }
   pintarEstamina();
-  let vel = correr ? 6.3 : agotado ? 2.9 : 3.7;
+  let vel = agachado ? 1.9 : correr ? 6.3 : agotado ? 2.9 : 3.7;
   if (zona === 'W') vel *= .6;
   let mx = -Math.sin(yaw) * adelante + Math.cos(yaw) * lado, mz = -Math.cos(yaw) * adelante - Math.sin(yaw) * lado;
   const L = Math.hypot(mx, mz);
@@ -1043,8 +1056,13 @@ function actualizar(dt) {
   }
   if (temblor > 0 && temblor < 90) temblor -= dt;
   const sacudida = temblor > 0 ? .035 : 0;
-  camera.position.y = 1.6 + Math.sin(bob) * (correr ? .06 : .04) + Math.sin(tiempo * 1.6) * .006 + (Math.random() - .5) * sacudida;
+  alturaCam += ((agachado ? .85 : 1.6) - alturaCam) * Math.min(1, dt * 10);
+  camera.position.y = alturaCam + Math.sin(bob) * (correr ? .06 : .04) + Math.sin(tiempo * 1.6) * .006 + (Math.random() - .5) * sacudida;
   camera.rotation.set(pitch + (Math.random() - .5) * sacudida, yaw + (Math.random() - .5) * sacudida, Math.sin(bob * .5) * (correr ? .012 : .005));
+  const bajoMesa = agachado && !escondido && mesas.some(m => Math.abs(camera.position.x - m[0]) < m[2] / 2 && Math.abs(camera.position.z - m[1]) < m[3] / 2);
+  if (bajoMesa && !avisoMesa) { avisoMesa = true; decir('🤫 Escondido debajo de la mesa. Aquí no te ven.', 2.5); } if (!bajoMesa) avisoMesa = false;
+  oculto = !!escondido || bajoMesa;
+  $('sigilo').textContent = oculto ? '🙈 OCULTO' : agachado ? '🤫 SIGILO' : '';
   if (invulnerable > 0) invulnerable -= dt;
   if (agotado && Math.random() < dt * 1.5) sonido(220, .35, 'sine', .04, 160);
   linterna.intensity = Math.random() < .004 ? .5 : 13;
@@ -1088,7 +1106,7 @@ function actualizar(dt) {
     }
   }
 
-  const enBase = zona === 'E' || !!escondido;
+  const enBase = zona === 'E' || oculto;
   let masCerca = 99, perseguido = false;
 
   // El Quieto
@@ -1102,7 +1120,8 @@ function actualizar(dt) {
 
   // El Reptante: te oye si corres (o si pasas muy cerca)
   const dR = Math.hypot(gReptante.position.x - yo.x, gReptante.position.z - yo.z);
-  const teOye = !enBase && ((correr && dR < 16 * (1 + estres * .8)) || dR < 3);
+  marcaR.visible = dR < 22; marcaR.material.color.set(reptante.estado === 'caza' ? '#ff3030' : '#ffffff'); marcaR.position.y = 1.6 + Math.sin(tiempo * 4) * .08;
+  const teOye = !enBase && ((correr && dR < 16 * (1 + estres * .8)) || dR < (agachado ? 1.2 : 3));
   if (teOye) { if (reptante.estado !== 'caza') { reptante.estado = 'caza'; sonido(180, .6, 'sawtooth', .2, 90); decir('<i>Algo te ha oído...</i>', 2); } reptante.t = 3; }
   if (reptante.estado === 'caza') {
     perseguido = true; mover(reptante, yo, 4.4, dt); reptante.t -= dt;
@@ -1116,12 +1135,13 @@ function actualizar(dt) {
   if (mama.estado !== 'caza' && meVe(gMama, 9, 1.4)) { mama.estado = 'caza'; mama.t = 4; chof(); sonido(90, 1, 'sawtooth', .2, 50); decir('¡MAMÁ BABOSA!', 2); }
   if (mama.estado === 'caza') {
     perseguido = true; mover(mama, yo, 2.4, dt);
-    if (zona !== 'W' || !lineaDeVista(gMama.position, yo)) mama.t -= dt; else mama.t = 4;
+    if (oculto) mama.t = 0; else if (zona !== 'W' || !lineaDeVista(gMama.position, yo)) mama.t -= dt; else mama.t = 4;
     if (mama.t <= 0) mama.estado = 'ronda';
   } else { const p = rondaMama[iMama]; mover(mama, p, 1, dt); if (Math.hypot(gMama.position.x - p.x, gMama.position.z - p.z) < .3) iMama = (iMama + 1) % rondaMama.length; }
 
   // La Reina
   if (gReina.visible && !enBase) { perseguido = true; mover(reina, yo, fase >= 5 ? 4.6 : 3.3, dt); }
+  else if (gReina.visible) mover(reina, V(37.5, 44.5), 2, dt);
   const dRe = Math.hypot(gReina.position.x - yo.x, gReina.position.z - yo.z);
 
   for (const cr of criaturas) {
@@ -1130,8 +1150,8 @@ function actualizar(dt) {
     masCerca = Math.min(masCerca, d);
     if (d < (cr === mama ? 1.3 : .85)) { golpe(cr); break; }
   }
-  const objEstres = escondido ? 0 : Math.min(1, Math.max(0, 1 - masCerca / 12) + (perseguido ? .35 : 0));
-  estres += (objEstres - estres) * dt * (objEstres > estres ? .9 : (escondido ? 1.4 : .35));
+  const objEstres = oculto ? 0 : Math.min(1, Math.max(0, 1 - masCerca / 12) + (perseguido ? .35 : 0));
+  estres += (objEstres - estres) * dt * (objEstres > estres ? .9 : (oculto ? 1.4 : .35));
   $('estresbar').style.width = (estres * 100).toFixed(0) + '%'; $('estresbar').style.background = estres > .7 ? '#ff3355' : estres > .4 ? '#d04dff' : '#8a5ad0';
   latido -= dt;
   if ((masCerca < 5 || perseguido) && latido <= 0) {  latido = perseguido ? .4 : .45 + masCerca * .09; }

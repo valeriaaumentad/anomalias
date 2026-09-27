@@ -8,7 +8,7 @@ Se juega en el navegador: **https://valeriaaumentad.github.io/anomalias/**
 - Parte 2 · El sótano
 - Parte 3 · La Niña
 
-Ordenador: W A S D para andar, ratón para mirar, Shift para correr, E para usar, T teléfono, M música.
+Ordenador: W A S D para andar, ratón para mirar, Shift para correr, Q para agacharse, E para usar y esconderse, T teléfono, M música.
 Móvil (en horizontal): joystick a la izquierda, deslizar a la derecha para mirar y botones en pantalla.
 
 ⚠️ Contiene sustos (jumpscares).
