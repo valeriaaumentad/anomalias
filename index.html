@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>Anomalías</title>
+<title>El Último Timbre</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Permanent+Marker&display=swap" rel="stylesheet">
 <style>
@@ -50,7 +50,7 @@
   @media (max-width: 900px){ #objetivo{font-size:13px;max-width:230px;padding:6px 10px} #mensaje{font-size:17px;bottom:32%} #vidas{font-size:22px} .pantalla h1{font-size:40px;letter-spacing:4px} .pantalla p{font-size:15px} }
   .pantalla{position:fixed;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;background:rgba(0,0,0,.88);text-align:center;cursor:pointer;padding:20px}
   .pantalla.ver{display:flex}
-  .pantalla h1{font-size:72px;letter-spacing:10px;color:#e33;margin:0 0 6px;text-shadow:0 0 30px #900}
+  .pantalla h1{font-size:clamp(30px,8vw,72px);letter-spacing:clamp(3px,1.1vw,10px);color:#e33;margin:0 0 6px;text-shadow:0 0 30px #900}
   .pantalla h2{font-weight:400;color:#bbb;margin:0 0 28px}
   .pantalla p{font-size:18px;color:#ddd;max-width:560px;line-height:1.5}
   .controles{display:grid;grid-template-columns:auto auto;gap:6px 18px;text-align:left;font-size:17px;margin:10px 0 26px;color:#ccc}
@@ -85,7 +85,7 @@
 <div id="tactil"><div id="joyBase"><div id="joyPunto"></div></div><button class="bt" id="btCorrer">CORRER</button><button class="bt" id="btUsar">E</button><button class="bt" id="btTel">📱</button><button class="bt" id="btPausa">⏸</button><button class="bt" id="btAgachar">🤫</button></div>
 <div id="girar">🔄<br><br>Gira el móvil para jugar en horizontal</div>
 <div id="titulo" class="pantalla ver">
-  <h1>ANOMALÍAS</h1>
+  <h1>EL ÚLTIMO TIMBRE</h1>
   <h2>Parte 1 · El apagón</h2>
   <div style="margin:-14px 0 18px;font-size:15px;color:#aaa">Elegir: <a href="index.html" style="color:#ddd" onclick="event.stopPropagation()">Parte 1</a> · <a href="sotano.html" style="color:#ddd" onclick="event.stopPropagation()">Parte 2</a> · <a href="tercera.html" style="color:#ddd" onclick="event.stopPropagation()">Parte 3</a></div>
   <div class="controles">
